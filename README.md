@@ -8,11 +8,11 @@ git clone https://github.com/nlnzcollservices/Items_maker_music
 
 ```
 
-Open  alma_tools_mod.py file and insert your production and sandbox Alma API key
+Open  **alma_tools_mod.py** file and insert your production and sandbox Alma API key
 
 Make sure that all requirements are satisvied.
 
-Prepare you xlsx spreadsheet with the test_sheet.xlsx format
+Prepare you xlsx spreadsheet with the **test_sheet.xlsx** format
 
 Run items_maker.py 
 
@@ -23,7 +23,7 @@ Pick up your xlsx file. Tick if you are making items in SB.
 
 # Further work
 
-Script containns the following template inside . To adjust to other project just modify this template inside of items_maker.py
+Script containns the following template inside . To adjust to other project just modify this template inside of **items_maker.py**
 
 
 ```

@@ -1,0 +1,22 @@
+<item>
+	<holding_data>
+		<holding_id></holding_id>
+		<copy_id></copy_id>
+	</holding_data>
+	<item_data>
+		<is_magnetic>false</is_magnetic>
+		<barcode></barcode>
+		<physical_material_type desc="Music Score">SCORE</physical_material_type>
+		<policy desc="Music Hire">HIRE</policy>
+		<enumeration_a></enumeration_a>
+		<enumeration_b></enumeration_b>
+		<enumeration_c></enumeration_c>
+		<chronology_i></chronology_i>
+		<chronology_j></chronology_j> 
+		<chronology_k></chronology_k>
+		<public_note></public_note>
+		<receiving_operator>API</receiving_operator>
+		<internal_note_1></internal_note_1>
+		<description></description>
+		</item_data>
+</item>

@@ -12,14 +12,14 @@ Open  alma_tools_mod.py file and insert your production and sandbox Alma API key
 
 Make sure that all requirements are satisvied.
 
-Prepare you xlsx spreadsheet with the follwing format.
-
-
+Prepare you xlsx spreadsheet with the test_sheet.xlsx format
 
 Run items_maker.py 
 
 It should produce small GUI screen with one file pick up and one checkbox option.
-Pick up your xlsx file. Tick if you are making sb.
+Pick up your xlsx file. Tick if you are making items in SB.
+
+[example]("gui.png")
 
 # Further work
 

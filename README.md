@@ -1,3 +1,34 @@
+# Description
+
+
+# Instructions
+
+```
+git clone https://github.com/nlnzcollservices/Items_maker_music
+
+```
+
+Open  alma_tools_mod.py file and insert your production and sandbox Alma API key
+
+Make sure that all requirements are satisvied.
+
+Prepare you xlsx spreadsheet with the follwing format.
+
+
+
+Run items_maker.py 
+
+It should produce small GUI screen with one file pick up and one checkbox option.
+Pick up your xlsx file. Tick if you are making sb.
+
+# Further work
+
+Script containns the following template inside . To adjust to other project just modify this template inside of items_maker.py
+
+
+```
+
+
 <item>
 	<holding_data>
 		<holding_id></holding_id>
@@ -20,3 +51,5 @@
 		<description></description>
 		</item_data>
 </item>
+
+```

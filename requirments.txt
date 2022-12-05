@@ -1,0 +1,12 @@
+sys
+re
+os
+PySimpleGUI
+urllib3
+random
+datetime
+openpyxl
+time sleep
+requests
+time
+bs4

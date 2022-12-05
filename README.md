@@ -19,7 +19,7 @@ Run items_maker.py
 It should produce small GUI screen with one file pick up and one checkbox option.
 Pick up your xlsx file. Tick if you are making items in SB.
 
-[example](gui.PNG)
+![example](gui.PNG)
 
 # Further work
 

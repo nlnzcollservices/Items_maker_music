@@ -1,5 +1,8 @@
 # Description
 
+This GUI based script is making items in Alma system for barcoded physical materials taking metadata from pre-made spreadhseet.
+Metadata includes mms id, barcode and name of holding.
+
 
 # Instructions
 

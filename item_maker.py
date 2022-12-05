@@ -43,7 +43,7 @@ def my_gui(values = None):
 	layout = [
 
 			[sg.Text('This app is making items with barcodes from xlsx file.',font = ('Helvetica', 13, 'bold italic'))],
-			[sg.Text('Please select your  spreasheet.',font = ('Helvetica', 13, 'bold italic'))],
+			[sg.Text('Please select your  spreadsheet.',font = ('Helvetica', 13, 'bold italic'))],
 			[sg.Text('browse results', size=(30, 1)),sg.FileBrowse('FileBrowse',key='spreadsheet_name')],
 			[sg.Checkbox('Try in SANDBOX?', default=False,key='if_sb',font = ('Helvetica', 11, 'bold italic'))],
 			[sg.Button("Run!")]

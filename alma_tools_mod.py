@@ -8,8 +8,8 @@ import sys
 
 
 
-pr_key = "l8xxce4628882ab340dcb8ee27ff149cbd7e"
-sb_key = "l8xx9e093ba2bc2a42038b9895a9da082bfd"
+pr_key = "INSERT YOURT PROD KEY"
+sb_key = "INSERT YOUR SB KEY"
 
 ###################################################################################################
 

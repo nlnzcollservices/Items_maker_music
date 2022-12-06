@@ -13,7 +13,7 @@ git clone https://github.com/nlnzcollservices/Items_maker_music
 
 Open  **alma_tools_mod.py** file and insert your production and sandbox Alma API key
 
-Make sure that all requirements are satisvied.
+Make sure that all requirements are satisfied.
 
 Prepare you xlsx spreadsheet with the barcodes  in [**test_sheet.xlsx**](test_sheet.xlsx) format
 

@@ -17,7 +17,7 @@ Make sure that all requirements are satisvied.
 
 Prepare you xlsx spreadsheet with the barcodes  in **test_sheet.xlsx** format
 
-Run items_maker.py 
+Run **items_maker.py**
 
 It should produce small GUI screen with one file pick up and one checkbox option.
 Pick up your xlsx file. Tick if you are making items in SB.

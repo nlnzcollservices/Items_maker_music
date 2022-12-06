@@ -26,7 +26,7 @@ Pick up your xlsx file. Tick if you are making items in SB.
 
 # Further work
 
-Script containns the following template inside . To adjust to other project just modify this template inside of **items_maker.py**
+Script contains the following template inside. To adjust to other project just modify this template inside of **items_maker.py**
 
 
 ```

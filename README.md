@@ -15,7 +15,7 @@ Open  **alma_tools_mod.py** file and insert your production and sandbox Alma API
 
 Make sure that all requirements are satisvied.
 
-Prepare you xlsx spreadsheet with the barcodes  in **test_sheet.xlsx**(test_sheet.xlsx) format
+Prepare you xlsx spreadsheet with the barcodes  in [**test_sheet.xlsx**](test_sheet.xlsx) format
 
 Run **items_maker.py**
 

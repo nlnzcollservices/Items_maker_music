@@ -35,12 +35,12 @@ def mock_alma_tools(monkeypatch):
 
 
 @mock.patch('item_maker.AlmaTools')
-def test_make_item(mock_alma_tools):
+def test_get_holdings(mock_alma_tools):
     from item_maker import make_item
 
     # Test case where location is provided
     mock_alma_tools.reset_mock()
-    mock_alma_tools.return_value.xml_response_data = "<holding_data></holding_data>"
+    mock_alma_tools.return_value.xml_response_data = "<holding_data><holding_id>23232323</holding_id></holding_data>"
     mms_id = '99999999999'
     holding_id = None
     location = 'WN.NL'  # existing location in the holding
@@ -49,12 +49,31 @@ def test_make_item(mock_alma_tools):
     key = 'prod'
 
     result = make_item(mms_id, holding_id, location, copy_id, barcode, key)
-
     mock_alma_tools.assert_called_once_with(key)
     mock_alma_tools.return_value.get_holdings.assert_called_once_with(mms_id)
-    # mock_alma_tools.return_value.get_holding.assert_called_once_with(mms_id, mock.ANY)
-    # mock_alma_tools.return_value.create_item.assert_called_once_with(mms_id, mock.ANY, mock.ANY)
-    # assert result == mock_alma_tools.return_value.status_code.startswith("2")
+
+
+@mock.patch('item_maker.AlmaTools')
+def test_make_item_with_holdings(mock_alma_tools):
+    from item_maker import make_item
+
+    # Test case where location is provided
+    mock_alma_tools.reset_mock()
+    mock_alma_tools.return_value.xml_response_data = "location>WN.NL</location"
+    mms_id = '99999999999'
+    holding_id = "232323"
+    location = 'WN.NL'  # existing location in the holding
+    barcode = '1234567890'
+    copy_id = '1'
+    key = 'prod'
+
+    result = make_item(mms_id, holding_id, location, copy_id, barcode, key)
+    mock_alma_tools.assert_called_once_with(key)
+    mock_alma_tools.return_value.get_holding.assert_called_once_with(mms_id, mock.ANY)
+    mock_alma_tools.return_value.create_item.assert_called_once_with(mms_id, mock.ANY, mock.ANY)
+    assert result != mock_alma_tools.return_value.status_code.startswith("2")
+
+
 
 @pytest.fixture
 def mocked_gui(monkeypatch):

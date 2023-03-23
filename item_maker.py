@@ -1,7 +1,6 @@
-import sys
-
 import re
 import os
+import sys
 import PySimpleGUI as sg
 import urllib3
 import random
@@ -9,76 +8,100 @@ from datetime import datetime as dt
 from alma_tools_mod import AlmaTools
 from openpyxl import load_workbook
 from time import sleep
-#to disable warnings verify=False
+
+# to disable warnings verify=False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-#setting arrival date
+
+# setting arrival date
 arrival_date = dt.now().strftime("%Y-%m-%dZ")
 
 
-# spreadsheet_name = "test_sheet.xlsx"
-
-
-def my_gui(values = None):
+def my_gui(values=None):
 	"""
-	This function running form in separate window and collect values
+	This function runs a form in a separate window and collects values.
 	Returns:
-		values(dict) - dictionary of form values
+	    values (dict) - dictionary of form values
 	"""
-
 	if not values:
-		spreadsheet_name = "test_sheet.xlsx"
+	    spreadsheet_name = "test_sheet.xlsx"
 
+	form = sg.FlexForm("xlsx submit form")
+	schemes = ["Green", "DarkGreen", "GreenMono"]
 
-	form = sg.FlexForm('xlsx submit form')
-	schemes = ["BlueMono","Tan","BluePurple","LightBrown","SystemDefaultForReal","LightBrown18","LightBrown16","LightBrown15","LightBrown14","LightBrown12","LightBrown11","LightBrown10","LightBrown8","LightBrown7","LightBrown6","LightBrown9","LightBrown5","Kayak","Purple","DarkGreen1","DarkGreen2","DarkGreen3","TealMono","Python","LightGrey3","LightGrey6","SendyBeach","BluePurple","DarkTeal7","LightGreen2",'DarkBrown6','Purple','DarkGreen4','DarkTeal7']
-	all_schemes = ['Black', 'BlueMono', 'BluePurple', 'BrightColors', 'BrownBlue', 'Dark', 'Dark2', 'DarkAmber', 'DarkBlack', 'DarkBlack1', 'DarkBlue', 'DarkBlue1', 'DarkBlue10', 'DarkBlue11', 'DarkBlue12', 'DarkBlue13', 'DarkBlue14', 'DarkBlue15', 'DarkBlue16', 'DarkBlue17', 'DarkBlue2', 'DarkBlue3', 'DarkBlue4', 'DarkBlue5', 'DarkBlue6', 'DarkBlue7', 'DarkBlue8', 'DarkBlue9', 'DarkBrown', 'DarkBrown1', 'DarkBrown2', 'DarkBrown3', 'DarkBrown4', 'DarkBrown5', 'DarkBrown6', 'DarkBrown7', 'DarkGreen', 'DarkGreen1', 'DarkGreen2', 'DarkGreen3', 'DarkGreen4', 'DarkGreen5', 'DarkGreen6', 'DarkGreen7', 'DarkGrey', 'DarkGrey1', 'DarkGrey10', 'DarkGrey11', 'DarkGrey12', 'DarkGrey13', 'DarkGrey14', 'DarkGrey2', 'DarkGrey3', 'DarkGrey4', 'DarkGrey5', 'DarkGrey6', 'DarkGrey7', 'DarkGrey8', 'DarkGrey9', 'DarkPurple', 'DarkPurple1', 'DarkPurple2', 'DarkPurple3', 'DarkPurple4', 'DarkPurple5', 'DarkPurple6', 'DarkPurple7', 'DarkRed', 'DarkRed1', 'DarkRed2', 'DarkTanBlue', 'DarkTeal', 'DarkTeal1', 'DarkTeal10', 'DarkTeal11', 'DarkTeal12', 'DarkTeal2', 'DarkTeal3', 'DarkTeal4', 'DarkTeal5', 'DarkTeal6', 'DarkTeal7', 'DarkTeal8', 'DarkTeal9', 'Default', 'Default1', 'DefaultNoMoreNagging', 'GrayGrayGray', 'Green', 'GreenMono', 'GreenTan', 'HotDogStand', 'Kayak', 'LightBlue', 'LightBlue1', 'LightBlue2', 'LightBlue3', 'LightBlue4', 'LightBlue5', 'LightBlue6', 'LightBlue7', 'LightBrown', 'LightBrown1', 'LightBrown10', 'LightBrown11', 'LightBrown12', 'LightBrown13', 'LightBrown2', 'LightBrown3', 'LightBrown4', 'LightBrown5', 'LightBrown6', 'LightBrown7', 'LightBrown8', 'LightBrown9', 'LightGray1', 'LightGreen', 'LightGreen1', 'LightGreen10', 'LightGreen2', 'LightGreen3', 'LightGreen4', 'LightGreen5', 'LightGreen6', 'LightGreen7', 'LightGreen8', 'LightGreen9', 'LightGrey', 'LightGrey1', 'LightGrey2', 'LightGrey3', 'LightGrey4', 'LightGrey5', 'LightGrey6', 'LightPurple', 'LightTeal', 'LightYellow', 'Material1', 'Material2', 'NeutralBlue', 'Purple', 'Python', 'Reddit', 'Reds', 'SandyBeach', 'SystemDefault', 'SystemDefault1', 'SystemDefaultForReal', 'Tan', 'TanBlue', 'TealMono', 'Topanga']
-	#all_schemes =["LightBlue2",'LightGrey2',"GrayGrayGray","Default1"]
-	
-	r = random.choice(all_schemes)
+	r = random.choice(schemes)
 	sg.theme(r)
 
-
-	
-
 	layout = [
+	    [
+	        sg.Text(
+	            "This app is making items with barcodes from xlsx file.",
+	            font=("Courier",13, "bold")
+	        )
+	    ],
+	    [
+	        sg.Text(
+	            "Please select your spreadsheet.", font=("Courier",13,"roman")
+	        )
+	    ],
+	    [
+	        sg.Text("browse results", size=(30, 1), font = ("Helvetica",9, "italic")),
+	        sg.FileBrowse("FileBrowse", key="spreadsheet_name"),
+	    ],
+	    [
+	        sg.Checkbox(
+	            "Try in SANDBOX?",
+	            default=False,
+	            key="if_sb",
+	            font=("Tahoma", 12),
+	        )
+	    ],
+	    [sg.Button("Run!"), sg.Button("Exit")],
+	]
 
-			[sg.Text('This app is making items with barcodes from xlsx file.',font = ('Helvetica', 13, 'bold italic'))],
-			[sg.Text('Please select your  spreadsheet.',font = ('Helvetica', 13, 'bold italic'))],
-			[sg.Text('browse results', size=(30, 1)),sg.FileBrowse('FileBrowse',key='spreadsheet_name')],
-			[sg.Checkbox('Try in SANDBOX?', default=False,key='if_sb',font = ('Helvetica', 11, 'bold italic'))],
-			[sg.Button("Run!")]
+	window = sg.Window(
+	    f'Item maker ("{r}" theme)',
+	    layout,
+	    default_element_size=(35, 2),
+	)
 
-			]
-	
-	window =sg.Window(f'Item maker ("{r}" theme)', layout, default_element_size=(35, 2))#,background_color='#ACBAAB')
-	event,values=window.read()
+	while True:
+	    event, values = window.read()
+	    if event in (sg.WIN_CLOSED, "Exit"):
+	        window.close()
+	        break
+	    elif event == "Run!":
+	        return values, window, event  # Return three values
 
-	return values,window,event
 
 
-def make_item(mms_id, holding_id, location, copy_id,barcode,key):
-
+def make_item(mms_id, holding_id=None, location=None, copy_id=None, barcode=None, key=None):
 	"""Thid function creates item
 	Parameters:
 		mms_id(str) - Alms mms id
-		holding_id(str) - Alma  holding id
-		location(str) - location status_code
-		copy_id(str) - identification number
-		barcode(str) - barcode
-		key(str) - "prod"  or "sb" for passing to AlmaTools
+		holding_id(str) - Alma  holding id (optional, defaults to None)
+		location(str) - location status_code (optional, defaults to None)
+		copy_id(str) - identification number (optional, defaults to None)
+		barcode(str) - barcode (optional, defaults to None)
+		key(str) - "prod"  or "sb" for passing to AlmaTools (optional, defaults to None)
 	Returns:
 		flag(bool) - True if item created and False if Failed
-
 	"""
-
-	my_api = AlmaTools(key)
-	print(key)
-	if not holding_id and location:
-		my_api.get_holdings(mms_id)
-		holdings = re.findall(r'<holding_id>(.*?)</holding_id>', my_api.xml_response_data)
+	my_alma = AlmaTools(key)
+	if location is None and holding_id is None:
+		raise ValueError("Either a location or holding_id must be provided.")
+	else:
+		if not holding_id:
+			my_alma.get_holdings(mms_id)
+			holdings = re.findall(r'<holding_id>(.*?)</holding_id>', my_alma.xml_response_data)
+		else:
+			holdings = [holding_id]
+		print("here")
 		for holding_id in holdings:
-			my_api.get_holding(mms_id, holding_id)
-			if location in my_api.xml_response_data:
+			print(holding_id)
+			my_alma.get_holding(mms_id, holding_id)
+			print(my_alma.xml_response_data)
+			if location in my_alma.xml_response_data:
+				sg.Print("MMS Id: ", mms_id)
 				sg.Print("Holding id: ", holding_id)
 				item_data = """
 					<item>
@@ -98,7 +121,7 @@ def make_item(mms_id, holding_id, location, copy_id,barcode,key):
 						<chronology_j></chronology_j> 
 						<chronology_k></chronology_k>
 						<public_note></public_note>
-						<receiving_operator>API</receiving_operator>
+						<receiving_operator>Downiegl_API</receiving_operator>
 						<internal_note_1></internal_note_1>
 						<description></description>
 						</item_data>
@@ -109,58 +132,110 @@ def make_item(mms_id, holding_id, location, copy_id,barcode,key):
 				copy_stat = "<copy_id>{}</copy_id>".format(copy_id)
 				# arrival_stat =  r'<arrival_date>{}</arrival_date>'.format(arrival_date)
 				item_data = item_data.replace("<holding_id></holding_id>",hold_stat).replace("<barcode></barcode>", barcode_stat).replace("<copy_id></copy_id>", copy_stat)#.replace('<arrival_date></arrival_date>',arrival_stat)
-				my_api.create_item(mms_id, holding_id, item_data)
-				if str(my_api.status_code).startswith("2"):
-					item_pid = re.findall(r"<pid>(.*?)</pid>",my_api.xml_response_data)[0]
-					sg.Print("Item created: ", item_pid)
-					sg.Print("Item PID: ", item_pid)
-					with open("item_report_"+arrival_date+".txt","a") as f:
-						f.write(mms_id+"|"+holding_id+"|"+item_pid+"\n")
-					return True
+				my_alma.create_item(mms_id, holding_id, item_data)
+				if str(my_alma.status_code).startswith("2"):
+					try:
+						item_pid = re.findall(r"<pid>(.*?)</pid>",my_alma.xml_response_data)[0]
+						sg.Print("Item created: ", item_pid)
+						sg.Print("Item PID: ", item_pid)
+						with open("item_report_"+arrival_date+".txt","a") as f:
+							f.write(mms_id+"|"+holding_id+"|"+item_pid+"\n")
+						return True
+					except:
+						return False
 				else:
-					sg.Print("Failed: ")
-					sg.Print(my_api.xml_response_data)
+					print(my_alma.xml_response_data)
+					try:
+						error_message = re.findall(r"<errorMessage>(.*?)</errorMessage>", str(my_alma.xml_response_data))[0]
+					except:
+						error_message = "Failed: Something went wrong, but no error message is available from Alma API service"
+					sg.Print(error_message)
 					with open("item_report_"+arrival_date+".txt","a") as f:
 						f.write(mms_id+"|"+holding_id+"| Failed \n")
 					return False
 
 
 
-
-
 def item_routine():
+	"""
+	This function manages the process of making items from a spreadsheet
+	It manages GUI window closing, check if spreadsheet has necessary columns,
+	taking holding id if it is in spreadsheet or set it None otherwise
+	"""
 
-	"""This function managing process of making item from spreasheet"""
+	values = {}
+	window = None
+
+	while True:
+
+		try:
+			if window is None:
+				values, window, event = my_gui(values)
+			if event == 'Exit' or event == sg.WIN_CLOSED:
+				window.close()
+				sys.exit(0)
+				break
+
+			if event == "Run!":
+				sg.Print("#"*50)
+				spreadsheet_name = values['spreadsheet_name']
+				sb = values['if_sb']
+				my_alma_key = 'sb' if sb else 'prod'
+				if sb:
+					sg.Print("Making items in SANDBOX")
+				else:
+					sg.Print("Making items in PRODUCTION")
+				if spreadsheet_name:
+					if os.path.isfile(spreadsheet_name):
+						wb = load_workbook(filename=spreadsheet_name, read_only=True)
+						sheet = wb.active
+						for row in sheet.iter_rows(min_row=2):
+							mms_id = str(row[0].value).strip()
+							if mms_id:
+								barcode = str(row[1].value).strip()
+								copy_id = str(row[2].value).strip()
+								sg.Print(copy_id)
+								location = str(row[3].value).strip()
+								try:
+									holding_id = str(row[4].value).strip()
+								except:
+									holding_id = None
+								if mms_id and barcode:
+									flag = make_item(mms_id, holding_id, location, copy_id, barcode, my_alma_key)
+									print("flag", flag)
+
+									if flag:
+										sleep(5)
+
+										sg.Print("Items created!")
 
 
-	values = None
-	values,window,event = my_gui(values = values)
-	if (values["spreadsheet_name"]==""):
-		raise IndexError("Please insert input file source")		
-	else:
-		spreadsheet_name = values["spreadsheet_name"]
-		if values["if_sb"]:
-			key = "sb"
-		else:
-			key = "prod"
-		wb = load_workbook(spreadsheet_name)
-		ws_name = wb.get_sheet_names()[0]
-		ws = wb[ws_name]
-		for i, row in enumerate(ws.iter_rows()):
-			holding = None
-			if i>1:
-				mms_id = ws["A{}".format(i)].value
-				if mms_id:
-					barcode = ws["B{}".format(i)].value
-					location = ws["D{}".format(i)].value
-					copy_id = ws["C{}".format(i)].value
-					holding_id  = ws["E{}".format(i)].value
-					sg.Print(copy_id)
-					sg.Print("Alma MMS ID: ",mms_id)
-					make_item(mms_id=mms_id, holding_id = holding_id, location = location, copy_id= copy_id, barcode=barcode, key = key)
-	
-	sleep(10)
-	window.close()
+
+
+								else:
+									sg.PopupError("Spreadsheet does not have necessary columns.")
+							event, values = window(timeout=0)
+							if event == sg.WIN_CLOSED or event == 'Exit':
+								break
+
+					else:
+						sg.PopupError("Selected file does not exist!")
+				else:
+					sg.PopupError("Please select a spreadsheet file!")
+
+			window.close()
+			window = None
+
+
+		except Exception as e:
+			
+			print(e)
+
+			if window:
+				window.close()
+
+
+			break
 
 
 if __name__ == '__main__':
